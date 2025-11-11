@@ -34,6 +34,11 @@ let simLoop = null;
 let securityPort = null;
 let lightingPort = null;
 
+// Config: minimum loading screen duration (ms). Change this value to keep loader visible longer.
+const MIN_LOADING_MS = 2000; // 2000 ms = 2s
+// mark when script started so we can ensure loader shows at least MIN_LOADING_MS
+window._loadingStart = performance.now();
+
 /* ==== reloj (tolerante si el nodo no existe) ==== */
 (function startClock() {
   const tick = () => {
@@ -57,10 +62,17 @@ function hideLoading() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  // Ensure loader is visible at least MIN_LOADING_MS to avoid flash on fast loads
+  const elapsed = performance.now() - (window._loadingStart || performance.now());
+  const remaining = Math.max(0, MIN_LOADING_MS - elapsed);
   if (window.location.pathname.includes("index")) {
-    setTimeout(hideLoading, 500);
+    // keep a small default delay but respect minimum total time
+    const defaultIndexDelay = 500;
+    const delay = Math.max(defaultIndexDelay, remaining);
+    setTimeout(hideLoading, delay);
   } else {
-    hideLoading();
+    // for other pages, wait remaining to reach minimum
+    setTimeout(hideLoading, remaining);
   }
 });
 
