@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Electricidad - BMS Dashboard</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="bg-white text-gray-900 min-h-screen flex">
+    <!-- Loading Screen -->
+    <div id="loading" class="fixed inset-0 bg-white flex items-center justify-center z-50">
+      <div class="text-center">
+        <img src="img/snoopy.gif" alt="Loading" class="w-32 h-32 mx-auto mb-4">
+        <p class="text-xl font-semibold text-gray-700">Cargando Módulo de Electricidad...</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="hidden flex w-full">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="w-64 bg-gray-800 text-white min-h-screen transition-all duration-300">
+        <div class="p-4">
+          <h1 class="text-2xl font-bold text-center mb-8 cursor-pointer flex items-center justify-center gap-3" onclick="window.location.href='index.html'">
+            <img src="img/logo-umg.png" alt="logo" class="w-10 h-10 rounded-full" />
+            <span>GRUPO 5</span>
+          </h1>
+          <nav>
+            <ul class="space-y-2">
+              <li>
+                <a href="index.html" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fas fa-home mr-3"></i><span>Inicio</span>
+                </a>
+              </li>
+              <li>
+                <a href="electricity.html" class="flex items-center px-4 py-2 rounded bg-gray-600 hover:bg-gray-700 transition">
+                  <i class="fas fa-lightbulb mr-3"></i><span>Electricidad</span>
+                </a>
+              </li>
+              <li>
+                <a href="security.html" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fas fa-shield-alt mr-3"></i><span>Seguridad</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="btnSupport" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fas fa-question-circle mr-3"></i><span>Soporte</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/jfigueroah04/DashboardARQ-Grupo5.git" target="_blank" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fab fa-github mr-3"></i><span>GitHub</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="absolute bottom-4 left-4">
+          <button id="toggleSidebar" class="text-white hover:text-gray-300">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Area -->
+      <main class="flex-1 flex p-8">
+        <!-- Left Content -->
+        <div class="flex-1 pr-8">
+          <h2 class="text-2xl font-bold mb-6">Módulo de Electricidad - Control de Iluminación</h2>
+          
+          <!-- Building Visualization -->
+          <div class="bg-gray-100 rounded-xl p-6 shadow-lg mb-8">
+            <h3 class="text-xl font-bold mb-6 text-yellow-600 flex items-center">
+              <i class="fas fa-lightbulb mr-2"></i>Visualización del Edificio de Apartamentos
+            </h3>
+            <div class="flex flex-col items-center">
+              <!-- SVG Building -->
+              <svg width="400" height="300" viewBox="0 0 400 300" class="border border-gray-300 rounded">
+                <!-- Building Structure -->
+                <rect x="50" y="50" width="300" height="200" fill="#e5e7eb" stroke="#374151" stroke-width="2"/>
+                
+                <!-- Floors -->
+                <line x1="50" y1="100" x2="350" y2="100" stroke="#6b7280" stroke-width="1"/>
+                <line x1="50" y1="150" x2="350" y2="150" stroke="#6b7280" stroke-width="1"/>
+                <line x1="50" y1="200" x2="350" y2="200" stroke="#6b7280" stroke-width="1"/>
+                
+                <!-- Windows -->
+                <rect x="70" y="70" width="30" height="20" fill="#3b82f6" id="window4"/>
+                <rect x="120" y="70" width="30" height="20" fill="#3b82f6" id="window3"/>
+                <rect x="170" y="70" width="30" height="20" fill="#3b82f6" id="window2"/>
+                <rect x="220" y="70" width="30" height="20" fill="#3b82f6" id="window1"/>
+                <rect x="270" y="70" width="30" height="20" fill="#3b82f6" id="window5"/>
+                
+                <rect x="70" y="120" width="30" height="20" fill="#3b82f6" id="window3_4"/>
+                <rect x="120" y="120" width="30" height="20" fill="#3b82f6" id="window3_3"/>
+                <rect x="170" y="120" width="30" height="20" fill="#3b82f6" id="window3_2"/>
+                <rect x="220" y="120" width="30" height="20" fill="#3b82f6" id="window3_1"/>
+                <rect x="270" y="120" width="30" height="20" fill="#3b82f6" id="window3_5"/>
+                
+                <rect x="70" y="170" width="30" height="20" fill="#3b82f6" id="window2_4"/>
+                <rect x="120" y="170" width="30" height="20" fill="#3b82f6" id="window2_3"/>
+                <rect x="170" y="170" width="30" height="20" fill="#3b82f6" id="window2_2"/>
+                <rect x="220" y="170" width="30" height="20" fill="#3b82f6" id="window2_1"/>
+                <rect x="270" y="170" width="30" height="20" fill="#3b82f6" id="window2_5"/>
+                
+                <rect x="70" y="220" width="30" height="20" fill="#3b82f6" id="windowL_4"/>
+                <rect x="120" y="220" width="30" height="20" fill="#3b82f6" id="windowL_3"/>
+                <rect x="170" y="220" width="30" height="20" fill="#3b82f6" id="windowL_2"/>
+                <rect x="220" y="220" width="30" height="20" fill="#3b82f6" id="windowL_1"/>
+                <rect x="270" y="220" width="30" height="20" fill="#3b82f6" id="windowL_5"/>
+                
+                <!-- Roof -->
+                <polygon points="30,50 370,50 350,30 50,30" fill="#1f2937"/>
+                <!-- Terrace light indicator: full-width bar on the roof -->
+                <rect x="60" y="30" width="280" height="14" fill="#3b82f6" id="windowTerrace" rx="4" />
+                
+                <!-- Labels (adjusted size & color) -->
+              </svg>
+              
+              <!-- Controls: inline level buttons with icons and colors -->
+              <div class="mt-6 flex flex-wrap items-center justify-center gap-4">
+                <button id="btnLobbyLight" class="px-4 py-2 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-800 flex items-center gap-2">
+                  <i class="fas fa-door-open"></i> Lobby
+                </button>
+                <button id="btnP1Light" class="px-4 py-2 rounded-lg bg-green-100 hover:bg-green-200 text-green-800 flex items-center gap-2">
+                  <i class="fas fa-layer-group"></i> Piso 2
+                </button>
+                <button id="btnP2Light" class="px-4 py-2 rounded-lg bg-indigo-100 hover:bg-indigo-200 text-indigo-800 flex items-center gap-2">
+                  <i class="fas fa-layer-group"></i> Piso 3
+                </button>
+                <button id="btnP3Light" class="px-4 py-2 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-800 flex items-center gap-2">
+                  <i class="fas fa-layer-group"></i> Piso 4
+                </button>
+                <button id="btnTerrLight" onclick="tryTerrace()" type="button" class="px-4 py-2 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-800 flex items-center gap-2">
+                  <i class="fas fa-sun"></i> Terraza
+                </button>
+                <!-- All on / off -->
+                <button id="btnAllOn" onclick="tryAllOn()" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white flex items-center gap-2 has-tooltip" data-tooltip="Encender todas las luces">
+                  <i class="fas fa-lightbulb"></i> Encender todo
+                </button>
+                <button id="btnAllOff" onclick="tryAllOff()" class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white flex items-center gap-2 has-tooltip" data-tooltip="Apagar todas las luces">
+                  <i class="fas fa-power-off"></i> Apagar todo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Cards -->
+        <div class="w-80 space-y-6">
+          <!-- Sensor Status -->
+          <div class="bg-gray-100 rounded-lg p-4 shadow-md">
+            <h3 class="text-lg font-bold mb-4 text-green-600 flex items-center">
+              <i class="fas fa-eye mr-2"></i>Estado de Sensores
+            </h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm">Lobby - Movimiento</span>
+                <div id="dotLobbyMov" class="w-3 h-3 rounded-full bg-gray-400"></div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm">Nivel 2 - Movimiento</span>
+                <div id="dotP1Mov" class="w-3 h-3 rounded-full bg-gray-400"></div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm">Nivel 3 - Movimiento</span>
+                <div id="dotP2Mov" class="w-3 h-3 rounded-full bg-gray-400"></div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm">Nivel 4 - Movimiento</span>
+                <div id="dotP3Mov" class="w-3 h-3 rounded-full bg-gray-400"></div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="w-full">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm">Terraza - Luz Ambiente</span>
+                    <div id="dotTerrDark" class="w-3 h-3 rounded-full bg-blue-400"></div>
+                  </div>
+                  <div class="flex items-center justify-between mt-1">
+                    <span id="txtTerrDark" class="text-sm text-gray-600">Luz ambiente: Claro</span>
+                    <span id="txtTerrLight" class="text-sm text-yellow-800">Luz: Apagada</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connection Status -->
+          <div class="bg-gray-100 rounded-lg p-4 shadow-md">
+            <h3 class="text-lg font-bold mb-4 text-purple-600 flex items-center">
+              <i class="fas fa-microchip mr-2"></i>Conexión Arduino
+            </h3>
+            <button id="btnConnectLighting" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg transition text-sm">
+              <i class="fas fa-plug mr-2"></i>Conectar
+            </button>
+            <p id="arduinoStatus" class="text-sm mt-2">Desconectado</p>
+          </div>
+
+          <!-- Simulation Control -->
+          <div class="bg-gray-100 rounded-lg p-4 shadow-md">
+            <h3 class="text-lg font-bold mb-4 text-red-600 flex items-center">
+              <i class="fas fa-play-circle mr-2"></i>Simulación
+            </h3>
+            <button id="btnSim" class="w-full bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg transition text-sm">
+              <i class="fas fa-play mr-2"></i>Iniciar
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Floating GitHub Button -->
+      <a href="https://github.com/jfigueroah04/DashboardARQ-Grupo5.git" target="_blank" class="fixed bottom-6 right-6 bg-gray-800 text-white p-4 rounded-full shadow-lg hover:bg-gray-700 transition">
+        <i class="fab fa-github text-xl"></i>
+      </a>
+
+      <!-- Modal -->
+      <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-40">
+        <div class="bg-gray-100 rounded-lg p-6 max-w-md w-full mx-4">
+          <h3 class="text-xl font-bold mb-4" id="modalTitle">Alertas</h3>
+          <p id="modalContent">No hay alertas pendientes.</p>
+          <button onclick="closeModal()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Cerrar</button>
+        </div>
+      </div>
+
+      <!-- Support Modal -->
+      <div id="supportModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-40">
+        <div class="bg-gray-100 rounded-lg p-6 max-w-lg w-full mx-4">
+          <div class="text-center mb-4">
+            <img src="img/logo-umg.png" alt="UMG Logo" class="w-16 h-16 mx-auto mb-2">
+            <h3 class="text-xl font-bold">Equipo de Desarrollo</h3>
+          </div>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span>Andrea Sofia Chafolla Mendez</span>
+              <span>5090-22-216</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Carmi Emileny Cuxum Gonzalez</span>
+              <span>5090-22-3686</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Josué Daniel Figueroa Herrera</span>
+              <span>5090-22-36</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Gustavo Ariel Barrientos García</span>
+              <span>5090-22-1263</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Dilan René Escobar Rodríguez</span>
+              <span>5090-22-1010</span>
+            </div>
+          </div>
+          <button onclick="closeSupportModal()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

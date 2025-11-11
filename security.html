@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Seguridad - BMS Dashboard</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="bg-white text-gray-900 min-h-screen flex">
+    <!-- Loading Screen -->
+    <div id="loading" class="fixed inset-0 bg-white flex items-center justify-center z-50">
+      <div class="text-center">
+        <img src="img/snoopy.gif" alt="Loading" class="w-32 h-32 mx-auto mb-4">
+        <p class="text-xl font-semibold text-gray-700">Cargando Módulo de Seguridad...</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="hidden flex w-full">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="w-64 bg-gray-800 text-white min-h-screen transition-all duration-300">
+        <div class="p-4">
+          <h1 class="text-2xl font-bold text-center mb-8 cursor-pointer flex items-center justify-center gap-3" onclick="window.location.href='index.html'">
+            <img src="img/logo-umg.png" alt="logo" class="w-10 h-10 rounded-full" />
+            <span>GRUPO 5</span>
+          </h1>
+          <nav>
+            <ul class="space-y-2">
+              <li>
+                <a href="index.html" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fas fa-home mr-3"></i><span>Inicio</span>
+                </a>
+              </li>
+              <li>
+                <a href="electricity.html" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fas fa-lightbulb mr-3"></i><span>Electricidad</span>
+                </a>
+              </li>
+              <li>
+                <a href="security.html" class="flex items-center px-4 py-2 rounded bg-gray-600 hover:bg-gray-700 transition">
+                  <i class="fas fa-shield-alt mr-3"></i><span>Seguridad</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="btnSupport" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fas fa-question-circle mr-3"></i><span>Soporte</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/jfigueroah04/DashboardARQ-Grupo5.git" target="_blank" class="flex items-center px-4 py-2 rounded hover:bg-gray-700 transition">
+                  <i class="fab fa-github mr-3"></i><span>GitHub</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="absolute bottom-4 left-4">
+          <button id="toggleSidebar" class="text-white hover:text-gray-300">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Area -->
+      <main class="flex-1 flex p-8">
+        <!-- Left Content -->
+        <div class="flex-1 pr-8">
+          <h2 class="text-2xl font-bold mb-6">DASHBOARD</h2>
+
+          <!-- Team members removed as requested -->
+
+          <!-- Quick Simulation removed per request -->
+
+          <!-- Access Control Visualization -->
+          <div class="bg-gray-100 rounded-xl p-6 shadow-lg mb-8">
+            <h3 class="text-xl font-bold mb-6 text-red-600 flex items-center">
+              <i class="fas fa-shield-alt mr-2"></i>Visualización de Accesos
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Pedestrian Gate -->
+              <div class="text-center">
+                <h4 class="font-semibold mb-4">Puerta Peatonal</h4>
+                <div class="relative mx-auto w-64 h-32 bg-gray-200 rounded-lg border-4 border-gray-400">
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-16 h-8 bg-gray-600 rounded relative">
+                      <div id="gateAnimation" class="absolute top-0 left-0 w-full h-full bg-red-500 transition-transform duration-1000 rounded" style="transform: translateX(0%);"></div>
+                    </div>
+                  </div>
+                  <div class="absolute bottom-2 left-2 right-2 text-center">
+                    <span id="txtServoG" class="text-sm font-semibold">Cerrada</span>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <span id="uidG" class="bg-gray-200 px-3 py-1 rounded text-sm">UID: —</span>
+                  <div class="mt-2">
+                    <button id="btnTryGarita" onclick="tryOpenGarita()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" type="button">Probar Apertura</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vehicle Barrier -->
+              <div class="text-center">
+                <h4 class="font-semibold mb-4">Talanquera Vehicular</h4>
+                <div class="relative mx-auto w-64 h-32 bg-gray-200 rounded-lg border-4 border-gray-400">
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-32 h-4 bg-gray-600 rounded relative" style="transform-origin: left center;">
+                      <div id="barrierAnimation" class="absolute top-0 left-0 w-full h-full bg-red-500 transition-transform duration-1000 rounded" style="transform: rotate(0deg);"></div>
+                    </div>
+                  </div>
+                  <div class="absolute bottom-2 left-2 right-2 text-center">
+                    <span id="txtServoP" class="text-sm font-semibold">Cerrada</span>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <span id="uidP" class="bg-gray-200 px-3 py-1 rounded text-sm">UID: —</span>
+                  <div class="mt-2">
+                    <button id="btnTryParqueo" onclick="tryOpenParqueo()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" type="button">Probar Apertura</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Logs -->
+          <div class="bg-gray-100 rounded-xl p-6 shadow-lg">
+            <h3 class="text-xl font-bold mb-6 text-purple-600 flex items-center">
+              <i class="fas fa-history mr-2"></i>Historial de Eventos de Seguridad
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-gray-300">
+                    <th class="text-left py-2">Fecha/Hora</th>
+                    <th class="text-left py-2">Origen</th>
+                    <th class="text-left py-2">Evento</th>
+                    <th class="text-left py-2">Detalle</th>
+                  </tr>
+                </thead>
+                <tbody id="tblLogs"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Cards -->
+        <div class="w-80 space-y-6">
+          <!-- RFID Simulation -->
+          <div class="bg-gray-100 rounded-lg p-4 shadow-md">
+            <h3 class="text-lg font-bold mb-4 text-blue-600 flex items-center">
+              <i class="fas fa-id-card mr-2"></i>Simulación RFID
+            </h3>
+            <div class="space-y-4">
+              <button id="btnSimulateAccess" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg transition">
+                <i class="fas fa-play mr-2"></i>Simular Acceso Autorizado
+              </button>
+              <button id="btnSimulateDeny" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg transition">
+                <i class="fas fa-times mr-2"></i>Simular Acceso Denegado
+              </button>
+              <div class="text-sm">
+                <p>Último acceso: <span id="lastAccess">—</span></p>
+                <p>Resultado: <span id="accessResult">—</span></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 'Estado del Sistema' removed as requested -->
+
+          <!-- Connection Status -->
+          <div class="bg-gray-100 rounded-lg p-4 shadow-md">
+            <h3 class="text-lg font-bold mb-4 text-purple-600 flex items-center">
+              <i class="fas fa-microchip mr-2"></i>Conexión Arduino de Seguridad
+            </h3>
+            <div class="flex items-center space-x-4">
+              <button id="btnConnectSecurity" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg transition">
+                <i class="fas fa-plug mr-2"></i>Conectar Arduino Seguridad
+              </button>
+              <span id="arduinoStatus" class="text-lg">Desconectado</span>
+            </div>
+          </div>
+
+          <!-- Simulation Control -->
+          <div class="bg-gray-100 rounded-lg p-4 shadow-md">
+            <h3 class="text-lg font-bold mb-4 text-red-600 flex items-center">
+              <i class="fas fa-play-circle mr-2"></i>Control de Simulación
+            </h3>
+            <div class="flex items-center space-x-4">
+              <button id="btnSim" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition">
+                <i class="fas fa-play mr-2"></i>Iniciar Simulación
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Floating GitHub Button -->
+      <a href="https://github.com/jfigueroah04/DashboardARQ-Grupo5.git" target="_blank" class="fixed bottom-6 right-6 bg-gray-800 text-white p-4 rounded-full shadow-lg hover:bg-gray-700 transition">
+        <i class="fab fa-github text-xl"></i>
+      </a>
+
+      <!-- Modal -->
+      <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-40">
+        <div class="bg-gray-100 rounded-lg p-6 max-w-md w-full mx-4">
+          <h3 class="text-xl font-bold mb-4" id="modalTitle">Alertas</h3>
+          <p id="modalContent">No hay alertas pendientes.</p>
+          <button onclick="closeModal()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Cerrar</button>
+        </div>
+      </div>
+
+      <!-- Support Modal -->
+      <div id="supportModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-40">
+        <div class="bg-gray-100 rounded-lg p-6 max-w-lg w-full mx-4">
+          <div class="text-center mb-4">
+            <img src="img/logo-umg.png" alt="UMG Logo" class="w-16 h-16 mx-auto mb-2">
+            <h3 class="text-xl font-bold">Equipo de Desarrollo</h3>
+          </div>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span>Andrea Sofia Chafolla Mendez</span>
+              <span>5090-22-216</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Carmi Emileny Cuxum Gonzalez</span>
+              <span>5090-22-3686</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Josué Daniel Figueroa Herrera</span>
+              <span>5090-22-36</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Gustavo Ariel Barrientos García</span>
+              <span>5090-22-1263</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Dilan René Escobar Rodríguez</span>
+              <span>5090-22-1010</span>
+            </div>
+          </div>
+          <button onclick="closeSupportModal()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
